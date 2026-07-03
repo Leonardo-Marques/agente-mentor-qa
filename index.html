@@ -70,7 +70,6 @@
   .st-t{font-family:'Archivo',sans-serif;font-weight:600;font-size:15px;color:#fff;line-height:1.2}
   .st-d{font-size:12.5px;color:var(--on-dark-faint);margin-top:3px}
   .stepper li.on .st-d{color:var(--on-dark-mut)}
-  .st-opt{display:inline-block;font-family:'Archivo',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.06em;color:var(--accent);background:rgba(76,155,224,.14);padding:2px 6px;border-radius:5px;margin-top:5px}
 
   .aside-foot{display:flex;flex-direction:column;gap:14px;border-top:1px solid rgba(255,255,255,.10);padding-top:22px}
   .conf{display:flex;gap:11px;align-items:flex-start;font-size:12.5px;line-height:1.55;color:var(--on-dark-mut)}
@@ -152,16 +151,6 @@
   label.chk:has(input:focus-visible){outline:2px solid var(--accent-deep);outline-offset:3px}
   .chk input{position:absolute;opacity:0;width:0;height:0}
 
-  /* botão revelar opcionais */
-  .reveal-row{padding-top:clamp(26px,4vw,42px)}
-  .btn-reveal{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;cursor:pointer;background:#fff;border:1px dashed #B9CADB;border-radius:12px;padding:18px 20px;transition:border-color .15s,box-shadow .15s,transform .14s}
-  .btn-reveal:hover{border-color:var(--accent-deep);box-shadow:var(--shadow-md);transform:translateY(-1px)}
-  .btn-reveal .plus{flex:none;width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,var(--accent),var(--accent-deep));color:#fff;font-size:20px;font-weight:600;display:grid;place-items:center;line-height:1;box-shadow:0 8px 18px -8px rgba(76,155,224,.7)}
-  .btn-reveal .rv-body{display:flex;flex-direction:column;gap:2px}
-  .btn-reveal .rv-t{font-family:'Archivo',sans-serif;font-weight:600;font-size:15px;color:var(--ink)}
-  .btn-reveal .rv-d{font-size:13px;color:var(--muted)}
-  .opt-badge{display:inline-block;font-family:'Archivo',sans-serif;font-size:10px;font-weight:700;color:var(--accent-ink);background:#E7F0FA;padding:2px 8px;border-radius:5px;letter-spacing:.05em;margin-left:8px;vertical-align:2px}
-
   .submit-row{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;padding-top:clamp(24px,4vw,34px)}
   .submit-note{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:44ch;margin:0}
   .submit-note strong{color:var(--ink);font-weight:600}
@@ -229,7 +218,7 @@
       </li>
       <li>
         <span class="st-num">04</span>
-        <span class="st-body"><span class="st-t">Como você pensa</span><span class="st-d">Situações do dia a dia</span><span class="st-opt">+ 5 situações bônus</span></span>
+        <span class="st-body"><span class="st-t">Como você pensa</span><span class="st-d">10 situações do dia a dia</span></span>
       </li>
     </ol>
 
@@ -423,7 +412,7 @@
           <span class="sec-no" aria-hidden="true">04</span>
           <div class="sec-htext">
             <h2 class="sec-title">Como você pensa na prática</h2>
-            <p class="sec-desc">Responda com as suas palavras. Não há resposta certa ou errada — o objetivo é compreender seu raciocínio. Uma resposta honesta e curta vale mais que um texto decorado.</p>
+            <p class="sec-desc">São 10 situações do dia a dia. Responda todas com as suas palavras — não há resposta certa ou errada, o objetivo é compreender seu raciocínio. Uma resposta honesta e curta vale mais que um texto decorado.</p>
           </div>
         </div>
 
@@ -456,47 +445,35 @@
           <textarea class="input" id="situacao8" name="situacao8" rows="5" placeholder="Descreva sua abordagem." required></textarea>
           <span class="err-msg">Conta como você lidaria com isso.</span>
         </div>
-      </section>
 
-      <!-- ============ SITUAÇÕES OPCIONAIS (reveladas) ============ -->
-      <div class="reveal-row" id="reveal-row">
-        <button type="button" class="btn-reveal" id="btn-reveal" aria-expanded="false" aria-controls="sec-extra">
-          <span class="plus" aria-hidden="true">+</span>
-          <span class="rv-body">
-            <span class="rv-t">Quer um diagnóstico mais preciso? Responda mais 5 situações</span>
-            <span class="rv-d">Opcional — mas quanto mais você contar, melhor fica o seu plano.</span>
-          </span>
-        </button>
-      </div>
-
-      <section class="sec" id="sec-extra" hidden>
-        <div class="sec-head">
-          <span class="sec-no" aria-hidden="true">05</span>
-          <div class="sec-htext">
-            <h2 class="sec-title">Mais algumas situações<span class="opt-badge">opcional</span></h2>
-            <p class="sec-desc">Mesmo espírito das anteriores. Responda as que fizerem sentido; pode deixar em branco as que não.</p>
-          </div>
+        <div class="field" data-field>
+          <label for="situacao2" class="q">6. Como você organiza sua rotina de testes no dia a dia?<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="situacao2" name="situacao2" rows="5" placeholder="Do seu jeito." required></textarea>
+          <span class="err-msg">Conta como você organiza sua rotina.</span>
         </div>
 
-        <div class="field">
-          <label for="situacao2" class="q">6. Como você organiza sua rotina de testes no dia a dia?</label>
-          <textarea class="input" id="situacao2" name="situacao2" rows="4" placeholder="Do seu jeito."></textarea>
+        <div class="field" data-field>
+          <label for="situacao4" class="q">7. Como você escreve um bom caso de teste?<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="situacao4" name="situacao4" rows="5" placeholder="Do seu jeito." required></textarea>
+          <span class="err-msg">Conta como você escreveria.</span>
         </div>
-        <div class="field">
-          <label for="situacao4" class="q">7. Como você escreve um bom caso de teste?</label>
-          <textarea class="input" id="situacao4" name="situacao4" rows="4" placeholder="Do seu jeito."></textarea>
+
+        <div class="field" data-field>
+          <label for="situacao7" class="q">8. O cliente quer seguir com a implantação mesmo tendo bugs abertos. Como você age?<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="situacao7" name="situacao7" rows="5" placeholder="Do seu jeito." required></textarea>
+          <span class="err-msg">Conta como você agiria.</span>
         </div>
-        <div class="field">
-          <label for="situacao7" class="q">8. O cliente quer seguir com a implantação mesmo tendo bugs abertos. Como você age?</label>
-          <textarea class="input" id="situacao7" name="situacao7" rows="4" placeholder="Do seu jeito."></textarea>
+
+        <div class="field" data-field>
+          <label for="situacao9" class="q">9. Como você comunica um bloqueio que está impedindo seus testes?<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="situacao9" name="situacao9" rows="5" placeholder="Do seu jeito." required></textarea>
+          <span class="err-msg">Conta como você comunicaria.</span>
         </div>
-        <div class="field">
-          <label for="situacao9" class="q">9. Como você comunica um bloqueio que está impedindo seus testes?</label>
-          <textarea class="input" id="situacao9" name="situacao9" rows="4" placeholder="Do seu jeito."></textarea>
-        </div>
-        <div class="field">
-          <label for="situacao10" class="q">10. Como você agiria para melhorar um time que não tem processo claro de QA?</label>
-          <textarea class="input" id="situacao10" name="situacao10" rows="4" placeholder="Do seu jeito."></textarea>
+
+        <div class="field" data-field>
+          <label for="situacao10" class="q">10. Como você agiria para melhorar um time que não tem processo claro de QA?<span class="req" aria-hidden="true">*</span></label>
+          <textarea class="input" id="situacao10" name="situacao10" rows="5" placeholder="Do seu jeito." required></textarea>
+          <span class="err-msg">Conta como você agiria.</span>
         </div>
       </section>
 
@@ -567,11 +544,11 @@
     ['situacao5','S3 · como registra um bug'],
     ['situacao6','S4 · bug crítico no pagamento na véspera'],
     ['situacao8','S5 · testar sistema legado sem documentação'],
-    ['situacao2','S6 (opc) · organiza a rotina de testes'],
-    ['situacao4','S7 (opc) · escreve um bom caso de teste'],
-    ['situacao7','S8 (opc) · cliente quer subir com bugs abertos'],
-    ['situacao9','S9 (opc) · comunica um bloqueio'],
-    ['situacao10','S10 (opc) · melhorar time sem processo de QA']
+    ['situacao2','S6 · organiza a rotina de testes'],
+    ['situacao4','S7 · escreve um bom caso de teste'],
+    ['situacao7','S8 · cliente quer subir com bugs abertos'],
+    ['situacao9','S9 · comunica um bloqueio'],
+    ['situacao10','S10 · melhorar time sem processo de QA']
   ];
 
   // ---- Coleta todos os valores num objeto ----
@@ -605,7 +582,9 @@
   }
 
   // ---- Validação dos campos obrigatórios ----
-  var OBRIGATORIOS_TEXTO = ['nome','email','objetivo','situacao1','situacao3','situacao5','situacao6','situacao8'];
+  var OBRIGATORIOS_TEXTO = ['nome','email','objetivo',
+    'situacao1','situacao3','situacao5','situacao6','situacao8',
+    'situacao2','situacao4','situacao7','situacao9','situacao10'];
 
   function limparErros(){
     form.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
@@ -750,17 +729,6 @@
         navigator.clipboard.writeText(box.value).then(done, function(){ document.execCommand('copy'); done(); });
       } else { document.execCommand('copy'); done(); }
     }catch(err){ document.execCommand('copy'); done(); }
-  });
-
-  // ---- Revelar situações opcionais ----
-  byId('btn-reveal').addEventListener('click', function(){
-    var sec = byId('sec-extra');
-    sec.hidden = false;
-    this.setAttribute('aria-expanded','true');
-    byId('reveal-row').style.display = 'none';
-    if(sec.scrollIntoView){ sec.scrollIntoView({behavior:'smooth', block:'start'}); }
-    var first = sec.querySelector('textarea');
-    if(first && first.focus){ first.focus(); }
   });
 
   // ---- Limpa o estado de erro ao corrigir ----
