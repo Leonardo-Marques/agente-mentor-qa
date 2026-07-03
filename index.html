@@ -209,6 +209,12 @@
           <h2 class="card-title">Sobre você</h2>
           <p class="card-desc">Só o básico para o mentor saber com quem está falando e devolver o seu PDI.</p>
         </div>
+        <div class="field" data-field>
+          <label for="codigo">Código de acesso<span class="req-star" aria-hidden="true">*</span></label>
+          <input class="input" id="codigo" name="codigo" type="text" autocomplete="off" placeholder="O código que você recebeu no convite">
+          <span class="helper">Este formulário é por convite. Digite o código que a pessoa que te chamou enviou.</span>
+          <span class="err-msg" id="codigo-err">Código de acesso incorreto. Confira o código do seu convite.</span>
+        </div>
         <div class="grid-2">
           <div class="field" data-field>
             <label for="nome">Nome completo<span class="req-star" aria-hidden="true">*</span></label>
@@ -472,6 +478,10 @@
   // ============================================================
   var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz1rmRkzOlT4pkyTs8pRQsNtV-4BnR2z70B1hmesaG90T3KsIk758ppXQISsad1r621/exec";
 
+  // Código de acesso: só quem digitar este código consegue enviar.
+  // DEVE ser igual ao CODIGO_ACESSO do apps-script.gs. Troque nos dois lugares.
+  var ACCESS_CODE = "MENTORQA2026";
+
   var byId = function(id){ return document.getElementById(id); };
   var form = byId('form');
 
@@ -518,6 +528,7 @@
      'situacao2','situacao4','situacao7','situacao9','situacao10'
     ].forEach(function(id){ var el = byId(id); d[id] = el ? el.value.trim() : ''; });
     d.consent = byId('consent').checked ? 'sim' : 'não';
+    d.codigo = (byId('codigo') && byId('codigo').value.trim()) || '';
     return d;
   }
 
@@ -543,6 +554,13 @@
     limparErros();
     var problemas = [];
     var primeiroErro = null;
+
+    var elCod = byId('codigo');
+    if(!elCod || elCod.value.trim() !== ACCESS_CODE){
+      var wc = elCod ? elCod.closest('[data-field]') : null;
+      if(wc){ wc.classList.add('invalid'); if(!primeiroErro) primeiroErro = wc; }
+      problemas.push('codigo');
+    }
 
     // textos obrigatórios
     OBRIGATORIOS_TEXTO.forEach(function(id){
@@ -640,7 +658,10 @@
       body: JSON.stringify(dados)
     }).then(function(resp){
       return resp.ok ? resp.text() : Promise.reject(new Error('status ' + resp.status));
-    }).then(function(){
+    }).then(function(txt){
+      if(txt && txt.indexOf('codigo_invalido') !== -1){
+        return Promise.reject(new Error('codigo_invalido'));
+      }
       mostrarSucesso(resumo, true);
     }).catch(function(){
       // Falhou o envio: não perde nada, cai no resumo copiável

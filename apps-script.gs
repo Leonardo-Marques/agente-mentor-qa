@@ -25,6 +25,11 @@
  * ============================================================
  */
 
+// Código de acesso: só quem enviar este código consegue gravar.
+// Passe-o apenas às pessoas que você quer que respondam.
+// DEVE ser igual ao ACCESS_CODE do index.html.
+var CODIGO_ACESSO = 'MENTORQA2026';
+
 // Nome da aba onde as respostas serão gravadas.
 var ABA = 'Respostas';
 
@@ -65,6 +70,12 @@ var COLUNAS = [
 function doPost(e) {
   try {
     var dados = JSON.parse(e.postData.contents);
+
+    // Barreira: recusa quem não enviar o código de acesso correto.
+    if (String(dados.codigo || '') !== CODIGO_ACESSO) {
+      return resposta_({ ok: false, erro: 'codigo_invalido' });
+    }
+
     var aba = obterAba_();
 
     // Monta a linha na MESMA ordem de COLUNAS.

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentor QA · Guia de instalação passo a passo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --emerald:#10B981; --spring:#34D399; --sky:#38BDF8; --cobalt:#2563EB;
+    --ink:#0B1220; --muted:#475467; --faint:#7C8B92;
+    --bg:#F2FAF6; --card:#FFFFFF; --line:#E1EBE6; --line-2:#EBF2EE;
+    --code-bg:#0d1b2a; --code-ink:#d7e3f4; --code-green:#5eead4;
+    --warn:#B54708; --warn-bg:#FFFAEB; --warn-line:#FEDF89;
+    --tip-bg:#EFF8FF; --tip-line:#B2DDFF; --tip-ink:#0B4A6F;
+    --r-card:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(40% 30% at 8% -2%,rgba(16,185,129,.12),transparent 70%),radial-gradient(42% 32% at 95% 0%,rgba(56,189,248,.13),transparent 72%)}
+  .wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:0 22px 90px}
+
+  header.hero{padding:54px 0 30px;text-align:left}
+  .badge{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:#0e9f74;background:rgba(16,185,129,.10);padding:6px 13px;border-radius:8px;margin-bottom:20px}
+  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.08;letter-spacing:-.025em}
+  .hero p{font-size:18px;color:var(--muted);margin-top:14px;max-width:60ch}
+  .meta-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .chip{font-size:13px;font-weight:600;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;display:inline-flex;align-items:center;gap:7px}
+  .chip b{color:var(--ink)}
+  .dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--emerald),var(--sky))}
+
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 24px;margin:28px 0}
+  .toc h2{font-family:'Sora',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:12px}
+  .toc ol{list-style:none;counter-reset:toc;display:grid;gap:8px}
+  .toc li{counter-increment:toc;display:flex;align-items:center;gap:12px;font-weight:600}
+  .toc li::before{content:counter(toc);flex:none;width:24px;height:24px;border-radius:7px;background:var(--line-2);color:var(--emerald);font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;display:grid;place-items:center}
+  .toc a{color:var(--ink);text-decoration:none}
+  .toc a:hover{color:var(--emerald)}
+  .toc .t{font-size:12px;font-weight:600;color:var(--faint);margin-left:auto}
+
+  .phase{margin-top:40px}
+  .phase-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .phase-n{flex:none;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--emerald),var(--sky));color:#fff;font-family:'Sora',sans-serif;font-weight:800;font-size:20px;display:grid;place-items:center;box-shadow:0 8px 20px -8px rgba(16,185,129,.5)}
+  .phase-head h2{font-family:'Sora',sans-serif;font-size:clamp(21px,3vw,27px);font-weight:700;letter-spacing:-.02em}
+  .phase-sub{color:var(--muted);font-size:15px;margin:2px 0 0 58px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:24px 26px;margin-top:18px;box-shadow:0 12px 28px -20px rgba(16,64,72,.2)}
+  ol.steps{list-style:none;counter-reset:step;display:grid;gap:20px}
+  ol.steps>li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:15px;align-items:start}
+  ol.steps>li::before{content:counter(step);grid-row:span 1;width:34px;height:34px;border-radius:9px;background:var(--line-2);color:var(--emerald);font-family:'Sora',sans-serif;font-weight:700;font-size:15px;display:grid;place-items:center}
+  .step-body h3{font-family:'Sora',sans-serif;font-size:16.5px;font-weight:700;margin-bottom:4px}
+  .step-body p{margin:5px 0}
+  .step-body ul{margin:8px 0 4px;padding-left:20px}
+  .step-body li{margin:5px 0}
+
+  .path{font-family:'Cascadia Code','Consolas',monospace;font-size:13.5px;background:var(--code-bg);color:var(--code-green);padding:11px 14px;border-radius:9px;display:block;margin:9px 0;word-break:break-all;line-height:1.5}
+  code{font-family:'Cascadia Code','Consolas',monospace;background:var(--line-2);color:#0b6b52;padding:1.5px 7px;border-radius:6px;font-size:.88em;font-weight:600}
+  kbd{font-family:'Cascadia Code',monospace;background:#fff;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.85em;font-weight:600;color:var(--ink)}
+  .ui{display:inline-block;background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(56,189,248,.1));border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-weight:600;font-size:.92em;white-space:nowrap}
+
+  .note{border-radius:12px;padding:14px 17px;margin:12px 0;font-size:14.5px;line-height:1.55;display:flex;gap:11px;align-items:flex-start}
+  .note .ico{flex:none;font-size:17px;line-height:1.4}
+  .note.tip{background:var(--tip-bg);border:1px solid var(--tip-line);color:var(--tip-ink)}
+  .note.warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn)}
+  .note.warn strong,.note.tip strong{color:inherit;font-weight:700}
+
+  .screen{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:12px 0;background:#fff}
+  .screen-bar{background:#f1f5f4;border-bottom:1px solid var(--line);padding:8px 13px;display:flex;gap:6px;align-items:center}
+  .screen-bar i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .screen-bar .r{background:#f87171}.screen-bar .y{background:#fbbf24}.screen-bar .g{background:#34d399}
+  .screen-bar span{margin-left:8px;font-size:12px;color:var(--faint);font-family:'Cascadia Code',monospace}
+  .screen-body{padding:16px 18px;font-size:14px;color:var(--muted)}
+  .screen-body .g-warn-title{font-weight:700;color:var(--ink);font-size:15px;margin-bottom:6px}
+  .screen-body .fake-link{color:var(--cobalt);font-weight:600;text-decoration:underline;cursor:default}
+
+  .callout-big{background:linear-gradient(135deg,rgba(16,185,129,.07),rgba(56,189,248,.06));border:1px solid rgba(16,185,129,.25);border-radius:var(--r-card);padding:22px 24px;margin:22px 0}
+  .callout-big h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+
+  .checkline{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line-2)}
+  .checkline:first-child{border-top:0}
+  .checkline .ck{flex:none;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--emerald),var(--sky));color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px}
+
+  .fluxo{display:grid;gap:0;margin:14px 0}
+  .fluxo .f{display:flex;gap:13px;align-items:flex-start;position:relative;padding-bottom:18px}
+  .fluxo .f:last-child{padding-bottom:0}
+  .fluxo .f .fn{flex:none;width:30px;height:30px;border-radius:9px;color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:13px;display:grid;place-items:center;z-index:1}
+  .fluxo .f:nth-child(1) .fn{background:linear-gradient(135deg,var(--emerald),var(--spring))}
+  .fluxo .f:nth-child(2) .fn{background:linear-gradient(135deg,var(--sky),#0ea5e9)}
+  .fluxo .f:nth-child(3) .fn{background:linear-gradient(135deg,var(--cobalt),#4f46e5)}
+  .fluxo .f:not(:last-child)::after{content:'';position:absolute;left:14px;top:30px;bottom:0;width:2px;background:var(--line)}
+  .fluxo .fb b{font-weight:700}
+  .fluxo .fb p{font-size:14px;color:var(--muted);margin:1px 0 0}
+
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13.5px;text-align:center;line-height:1.7}
+  a{color:var(--emerald)}
+  @media print{.aurora{display:none}body{background:#fff}.card,.toc{box-shadow:none}}
+  @media(max-width:560px){ol.steps>li{grid-template-columns:28px 1fr}.phase-sub{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">Guia de instalação · Mentor QA</span>
+    <h1>Como publicar o formulário Mentor QA na sua conta</h1>
+    <p>Este guia reproduz, passo a passo, tudo que foi feito para colocar o formulário no ar: conectar a uma planilha Google (para receber as respostas) e hospedar a página no GitHub Pages. Não precisa saber programar — é copiar, colar e clicar.</p>
+    <div class="meta-strip">
+      <span class="chip"><span class="dot"></span> Tempo: <b>~20 minutos</b></span>
+      <span class="chip"><span class="dot"></span> Custo: <b>gratuito</b></span>
+      <span class="chip"><span class="dot"></span> Precisa: <b>conta Google + conta GitHub</b></span>
+    </div>
+  </header>
+
+  <div class="note tip">
+    <span class="ico">🎯</span>
+    <div><strong>O que você vai ter no final:</strong> um link (ex.: <code>https://seu-usuario.github.io/agente-mentor-qa/</code>) que qualquer pessoa abre, responde o check-in de QA, e as respostas caem organizadas numa planilha sua. Depois, você roda o agente Mentor QA sobre cada resposta para gerar o PDI individual.</div>
+  </div>
+
+  <!-- COMO FUNCIONA -->
+  <div class="callout-big">
+    <h3>🧭 Como as peças se encaixam</h3>
+    <div class="fluxo">
+      <div class="f"><span class="fn">1</span><div class="fb"><b>A página (GitHub Pages)</b><p>Um arquivo HTML hospedado de graça no GitHub. É o formulário que a pessoa preenche.</p></div></div>
+      <div class="f"><span class="fn">2</span><div class="fb"><b>O carteiro (Google Apps Script)</b><p>Um mini-script gratuito que recebe as respostas e escreve na planilha. Fica "no ar" numa URL própria.</p></div></div>
+      <div class="f"><span class="fn">3</span><div class="fb"><b>A caixa (Planilha Google)</b><p>Onde cada resposta vira uma linha. É de onde você lê os dados depois.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ÍNDICE -->
+  <nav class="toc">
+    <h2>As 4 etapas</h2>
+    <ol>
+      <li><a href="#etapa1">Pegar os arquivos do projeto</a><span class="t">2 min</span></li>
+      <li><a href="#etapa2">Criar a planilha e o script (Google)</a><span class="t">8 min</span></li>
+      <li><a href="#etapa3">Colar a URL no formulário</a><span class="t">2 min</span></li>
+      <li><a href="#etapa4">Publicar no GitHub Pages</a><span class="t">6 min</span></li>
+    </ol>
+  </nav>
+
+  <!-- ETAPA 1 -->
+  <section class="phase" id="etapa1">
+    <div class="phase-head"><span class="phase-n">1</span><h2>Pegar os arquivos do projeto</h2></div>
+    <p class="phase-sub">Você precisa de 4 arquivos: o formulário, o script, e dois auxiliares.</p>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body">
+          <h3>Reúna estes 4 arquivos numa pasta</h3>
+          <ul>
+            <li><code>index.html</code> — o formulário (a página em si).</li>
+            <li><code>apps-script.gs</code> — o script que grava na planilha.</li>
+            <li><code>README.md</code> — instruções (opcional, mas bom manter).</li>
+            <li><code>.nojekyll</code> — um arquivo vazio que o GitHub Pages precisa. <strong>Não apague.</strong></li>
+          </ul>
+          <div class="note tip"><span class="ico">💡</span><div>Quem te enviou este guia provavelmente enviou junto a pasta <code>agente-mentor-qa</code> com esses arquivos. Se não, peça a ela os 4 arquivos.</div></div>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ETAPA 2 -->
+  <section class="phase" id="etapa2">
+    <div class="phase-head"><span class="phase-n">2</span><h2>Criar a planilha e o script no Google</h2></div>
+    <p class="phase-sub">Aqui você monta a "caixa" que recebe as respostas. É a parte mais longa — vá com calma.</p>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body">
+          <h3>Crie uma planilha nova</h3>
+          <p>Na barra de endereços do navegador, digite:</p>
+          <span class="path">sheets.new</span>
+          <p>Abre uma planilha em branco. Dê um nome, ex.: <strong>"Mentor QA — Respostas"</strong>.</p>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Abra o editor de script</h3>
+          <p>No menu da planilha: <span class="ui">Extensões</span> → <span class="ui">Apps Script</span>. Abre uma aba nova com um editor de código.</p>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Cole o código do script</h3>
+          <p>No editor, apague o que estiver lá (normalmente um <code>function myFunction() {}</code> vazio). Abra o arquivo <code>apps-script.gs</code> num bloco de notas, selecione tudo (<kbd>Ctrl</kbd>+<kbd>A</kbd>), copie (<kbd>Ctrl</kbd>+<kbd>C</kbd>) e cole no editor (<kbd>Ctrl</kbd>+<kbd>V</kbd>).</p>
+          <p>Clique no ícone de disquete (<span class="ui">Salvar projeto</span>) ou <kbd>Ctrl</kbd>+<kbd>S</kbd>.</p>
+          <div class="note tip"><span class="ico">💡</span><div>Copie do arquivo, não de uma imagem — assim não erra nada. Você não precisa editar o código; ele já sabe usar a planilha à qual está ligado.</div></div>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Rode a função que prepara a planilha</h3>
+          <p>Na barra cinza no topo do editor, há um menu de funções. Selecione <code>prepararPlanilha</code> e clique em <span class="ui">▶ Executar</span>.</p>
+          <p>Isso cria a aba <strong>"Respostas"</strong> com o cabeçalho já formatado (em verde), automaticamente.</p>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Autorize as permissões (a tela que assusta, mas é normal)</h3>
+          <p>Na primeira execução, o Google pede autorização. Siga exatamente:</p>
+          <ul>
+            <li>Clique em <span class="ui">Revisar permissões</span> → escolha sua conta Google.</li>
+            <li>Vai aparecer uma tela amarela como esta:</li>
+          </ul>
+          <div class="screen">
+            <div class="screen-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span>accounts.google.com</span></div>
+            <div class="screen-body">
+              <div class="g-warn-title">⚠️ O Google não verificou este app</div>
+              <p>O app está solicitando acesso a informações confidenciais na sua Conta do Google. Não é recomendado usá-lo até que o desenvolvedor faça a verificação com o Google.</p>
+              <p style="margin-top:8px"><span class="fake-link">Avançado</span></p>
+            </div>
+          </div>
+          <ul>
+            <li>Clique em <span class="ui">Avançado</span> (canto inferior).</li>
+            <li>Clique no link <span class="ui">Acessar (nome do projeto) (não seguro)</span>.</li>
+            <li>Na tela de permissões, clique em <span class="ui">Permitir</span>.</li>
+          </ul>
+          <div class="note warn"><span class="ico">🛡️</span><div><strong>Por que esse aviso aparece e por que é seguro:</strong> o Google mostra isso para todo script pessoal. O "desenvolvedor" citado é <strong>você mesmo</strong> — você está autorizando o seu próprio código a mexer na sua própria planilha. Ele não acessa mais nada da sua conta.</div></div>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Confira que deu certo</h3>
+          <p>No rodapé do editor deve aparecer <span class="ui">Execução concluída</span> (sem erro vermelho). Volte à planilha: apareceu a aba <strong>"Respostas"</strong> com um cabeçalho verde (Nome, E-mail, Senioridade…)? Então esta parte está pronta. ✅</p>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Publique o script como "App da Web"</h3>
+          <p>É isso que deixa o script "no ar" para o formulário conseguir enviar. No editor, canto superior direito:</p>
+          <ul>
+            <li><span class="ui">Implantar</span> → <span class="ui">Nova implantação</span>.</li>
+            <li>Clique na engrenagem ⚙ ao lado de "Selecionar tipo" → escolha <span class="ui">App da Web</span>.</li>
+            <li>Preencha:
+              <ul>
+                <li><strong>Executar como:</strong> <span class="ui">Eu</span> (seu e-mail).</li>
+                <li><strong>Quem pode acessar:</strong> <span class="ui">Qualquer pessoa</span>.</li>
+              </ul>
+            </li>
+            <li>Clique em <span class="ui">Implantar</span> (autorize de novo se pedir).</li>
+          </ul>
+          <div class="note warn"><span class="ico">⚠️</span><div><strong>O passo mais fácil de errar:</strong> "Quem pode acessar" tem que ser <strong>"Qualquer pessoa"</strong> — e não "Qualquer pessoa com Conta do Google". Se ficar restrito, o formulário não consegue enviar. O script só grava linhas; ninguém vê sua planilha por isso.</div></div>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Copie a URL do app</h3>
+          <p>No fim, aparece uma <strong>URL do app da Web</strong>, longa e terminada em <code>/exec</code>:</p>
+          <span class="path">https://script.google.com/macros/s/AKfycb…longo…/exec</span>
+          <p>Clique em <span class="ui">Copiar</span>. Guarde essa URL — ela é usada na Etapa 3.</p>
+          <div class="note tip"><span class="ico">🔒</span><div>Essa URL <strong>não é uma senha</strong>. Ela só serve para enviar dados ao seu script (que apenas adiciona linhas). Pode guardá-la sem medo. O que nunca se compartilha é a senha da sua conta Google.</div></div>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ETAPA 3 -->
+  <section class="phase" id="etapa3">
+    <div class="phase-head"><span class="phase-n">3</span><h2>Colar a URL no formulário</h2></div>
+    <p class="phase-sub">Agora você conecta o formulário à sua "caixa" do Google.</p>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body">
+          <h3>Abra o <code>index.html</code> num editor de texto</h3>
+          <p>Bloco de Notas ou VS Code servem. Procure (com <kbd>Ctrl</kbd>+<kbd>F</kbd>) por <code>APPS_SCRIPT_URL</code>. Você vai achar esta linha:</p>
+          <span class="path">var APPS_SCRIPT_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";</span>
+        </div></li>
+        <li><div class="step-body">
+          <h3>Substitua pelo seu link</h3>
+          <p>Troque o <code>COLE_AQUI_A_URL_DO_APPS_SCRIPT</code> pela URL que você copiou (a que termina em <code>/exec</code>). Mantenha as aspas. Deve ficar assim:</p>
+          <span class="path">var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycb…/exec";</span>
+          <p>Salve o arquivo (<kbd>Ctrl</kbd>+<kbd>S</kbd>).</p>
+          <div class="note tip"><span class="ico">💡</span><div>Enquanto a URL não estiver colada, o formulário ainda funciona em "modo offline": mostra o resumo das respostas para copiar, mas não envia ao Google. Depois de colar, ele passa a enviar de verdade.</div></div>
+        </div></li>
+        <li><div class="step-body">
+          <h3>Teste na sua máquina (recomendado)</h3>
+          <p>Dê um duplo-clique no <code>index.html</code> para abri-lo no navegador. Preencha um teste (os campos obrigatórios: nome, e-mail, senioridade, objetivo, as 5 situações e o consentimento) e clique em <span class="ui">Enviar e receber meu PDI</span>.</p>
+          <p>Deve aparecer <strong>"Recebido! Já está com a gente."</strong> Depois, abra sua planilha (aba "Respostas") e confira: <strong>apareceu uma linha nova com os dados?</strong> Se sim, a conexão está funcionando. 🎉</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ETAPA 4 -->
+  <section class="phase" id="etapa4">
+    <div class="phase-head"><span class="phase-n">4</span><h2>Publicar no GitHub Pages</h2></div>
+    <p class="phase-sub">O último passo: colocar a página no ar num link público, de graça.</p>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body">
+          <h3>Crie um repositório no GitHub</h3>
+          <p>Em <a href="https://github.com/new">github.com/new</a>, crie um repositório novo. Sugestão de nome: <code>agente-mentor-qa</code>. Deixe <strong>Público</strong> (o GitHub Pages gratuito exige repositório público).</p>
+          <div class="note warn"><span class="ico">👀</span><div><strong>Ciente do que fica público:</strong> a URL do seu Apps Script ficará visível no código do repositório. Ela não dá acesso à sua planilha nem à sua conta — mas alguém que a descubra poderia enviar linhas de spam para a planilha. Para uso interno, o risco é baixo. Se incomodar, dá para adicionar um código de acesso ao formulário depois.</div></div>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Suba os 4 arquivos</h3>
+          <p><strong>Opção simples (sem linha de comando):</strong> na página do repositório recém-criado, clique em <span class="ui">uploading an existing file</span> e arraste os 4 arquivos (<code>index.html</code>, <code>apps-script.gs</code>, <code>README.md</code>, <code>.nojekyll</code>). Clique em <span class="ui">Commit changes</span>.</p>
+          <p><strong>Opção linha de comando</strong> (se você usa git), dentro da pasta do projeto:</p>
+          <span class="path">git init
+git add .
+git commit -m "Formulário Mentor QA"
+git branch -M main
+git remote add origin https://github.com/SEU-USUARIO/agente-mentor-qa.git
+git push -u origin main</span>
+          <div class="note warn"><span class="ico">📄</span><div>Confira que o <code>.nojekyll</code> foi enviado. Por começar com ponto, alguns sistemas o escondem. Sem ele, o GitHub Pages pode não publicar a página corretamente.</div></div>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Ligue o GitHub Pages</h3>
+          <ul>
+            <li>No repositório: <span class="ui">Settings</span> → menu lateral <span class="ui">Pages</span>.</li>
+            <li>Em <strong>Source</strong>, escolha <span class="ui">Deploy from a branch</span>.</li>
+            <li>Em <strong>Branch</strong>, selecione <span class="ui">main</span> e a pasta <span class="ui">/ (root)</span> → <span class="ui">Save</span>.</li>
+          </ul>
+          <p>Aguarde cerca de 1 minuto. O link aparece no topo dessa mesma página:</p>
+          <span class="path">https://SEU-USUARIO.github.io/agente-mentor-qa/</span>
+        </div></li>
+
+        <li><div class="step-body">
+          <h3>Teste final no link real</h3>
+          <p>Abra o link do Pages, envie uma resposta de teste e confirme que a linha caiu na planilha. Este é o teste no ambiente de verdade (em <code>https://</code>). Pronto — está no ar! 🚀</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="phase">
+    <div class="phase-head"><span class="phase-n">🔑</span><h2>Código de acesso (só quem você convida responde)</h2></div>
+    <p class="phase-sub">O formulário é por convite: quem não digitar o código certo não consegue enviar.</p>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body"><h3>Escolha o seu código</h3><p>Já vem <code>MENTORQA2026</code> de fábrica. Você pode manter ou trocar por outro. Precisa ser <strong>igual nos dois arquivos</strong>.</p></div></li>
+        <li><div class="step-body"><h3>No <code>index.html</code></h3><p>Procure (<kbd>Ctrl</kbd>+<kbd>F</kbd>) por <code>ACCESS_CODE</code> e ajuste o valor.</p><span class="path">var ACCESS_CODE = "MENTORQA2026";</span></div></li>
+        <li><div class="step-body"><h3>No <code>apps-script.gs</code></h3><p>Procure por <code>CODIGO_ACESSO</code> e coloque o <strong>mesmo</strong> valor.</p><span class="path">var CODIGO_ACESSO = 'MENTORQA2026';</span><div class="note warn"><span class="ico">⚠️</span><div>Os dois têm que ser idênticos. Se trocar depois de já ter publicado o script, <strong>republique</strong> (veja "Se algo não funcionar" → "Editei o script depois de publicar").</div></div></div></li>
+        <li><div class="step-body"><h3>Passe o código só para quem você quer</h3><p>Envie no convite (e-mail, chat). Quem não tiver o código verá <strong>"Código de acesso incorreto"</strong> e não consegue enviar.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CHECKLIST FINAL -->
+  <div class="callout-big">
+    <h3>✅ Checklist final</h3>
+    <div class="checkline"><span class="ck">✓</span><div>Planilha criada com a aba <strong>"Respostas"</strong> e cabeçalho verde.</div></div>
+    <div class="checkline"><span class="ck">✓</span><div>Script publicado como <strong>App da Web</strong> com acesso <strong>"Qualquer pessoa"</strong>.</div></div>
+    <div class="checkline"><span class="ck">✓</span><div>URL <code>/exec</code> colada no <code>index.html</code> (sem o <code>COLE_AQUI</code>).</div></div>
+    <div class="checkline"><span class="ck">✓</span><div>Os 4 arquivos no GitHub (incluindo o <code>.nojekyll</code>).</div></div>
+    <div class="checkline"><span class="ck">✓</span><div>GitHub Pages ligado na branch <strong>main / root</strong>.</div></div>
+    <div class="checkline"><span class="ck">✓</span><div>Teste no link <code>https://…github.io/…</code> gravou uma linha na planilha.</div></div>
+  </div>
+
+  <!-- PROBLEMAS COMUNS -->
+  <section class="phase">
+    <div class="phase-head"><span class="phase-n">?</span><h2>Se algo não funcionar</h2></div>
+    <div class="card">
+      <ol class="steps">
+        <li><div class="step-body">
+          <h3>Enviei, mas não aparece linha na planilha</h3>
+          <p>Quase sempre é o <strong>"Quem pode acessar"</strong> da publicação: tem que ser <strong>"Qualquer pessoa"</strong>. Volte no editor do script → <span class="ui">Implantar</span> → <span class="ui">Gerenciar implantações</span> → edite (lápis) → corrija o acesso → <span class="ui">Implantar</span>.</p>
+        </div></li>
+        <li><div class="step-body">
+          <h3>Editei o script depois de publicar</h3>
+          <p>Toda vez que mudar o <code>apps-script.gs</code>, republique: <span class="ui">Implantar</span> → <span class="ui">Gerenciar implantações</span> → editar (lápis) → <strong>Versão: Nova versão</strong> → <span class="ui">Implantar</span>. Assim a <strong>mesma URL</strong> passa a valer o novo código (a URL não muda). Se criar uma implantação nova do zero, a URL muda e você precisa atualizar o <code>index.html</code>.</p>
+        </div></li>
+        <li><div class="step-body">
+          <h3>A página do GitHub Pages não abre / aparece em branco</h3>
+          <p>Confirme que o <code>.nojekyll</code> está no repositório e que o Pages está apontando para <strong>main / (root)</strong>. Depois de ligar, o primeiro deploy leva 1–2 minutos.</p>
+        </div></li>
+        <li><div class="step-body">
+          <h3>A planilha começou a receber linhas de lixo (spam)</h3>
+          <p>Como a URL é pública, isso é possível. A solução é adicionar um <strong>código de acesso</strong> ao formulário (uma palavra secreta que só quem você convida recebe). Peça a quem montou o projeto para incluir essa proteção — é uma alteração pequena.</p>
+        </div></li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Mentor QA · guia de instalação · uso interno.<br>
+    Depois de coletar as respostas, rode o agente <strong>Mentor QA</strong> sobre cada uma para gerar o PDI de 3 meses individual.<br>
+    <span style="color:var(--faint)">Dica: para imprimir ou salvar em PDF, use <kbd>Ctrl</kbd>+<kbd>P</kbd> — o layout se adapta.</span>
+  </footer>
+
+</div>
+</body>
+</html>
